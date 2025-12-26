@@ -5,7 +5,8 @@
 # Runners Configuration: https://github.com/actions/runner?tab=readme-ov-file
 
 name: "Test Project 01 Section 03"
-on: push # Events and Triggers
+# on: push # Events and Triggers
+on: [push, workflow_dispatch]
 jobs:
   # Default jobs run parallel
   test:
