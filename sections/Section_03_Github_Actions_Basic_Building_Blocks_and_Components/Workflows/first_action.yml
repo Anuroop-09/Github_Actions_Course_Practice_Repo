@@ -1,0 +1,10 @@
+name: First Workflow # Name of the worklow
+on: workflow_dispatch # Type of trigger or event to which this workflow should work
+jobs:
+  first-job: # Job name can user choice. Jobs will run in parallel
+    runs-on: ubuntu-latest # On which machine we would like to run (runners)
+    steps: # Sequence of process to work
+      - name: Print greeting
+        run: echo "Hello World!"
+      - name: Print goodbye
+        run: echo "Done - bye!"
