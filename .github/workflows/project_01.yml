@@ -1,0 +1,23 @@
+# https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+# https://github.com/actions/checkout
+# https://github.com/marketplace/actions/checkout
+# https://github.com/actions/runner-images?tab=readme-ov-file
+# https://github.com/actions/runner?tab=readme-ov-file
+
+name: "Test Project 01 Section 03"
+on: push # events and triggers
+jobs:
+  test:
+    runs-on: ubuntu-latest # machine that we would like to use to run tthe code
+    steps:
+      # get the code downloaded to the machine which we mentioned
+      - name: Get Code
+        uses: actions/checkout@v6
+      - name: Install NodeJS # ubuntu latest has nodejs but we can still configure it
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
