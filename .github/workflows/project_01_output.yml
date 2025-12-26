@@ -1,0 +1,10 @@
+# Actions - Context: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#github-context
+
+name: Output Information
+on: workflow_dispatch
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output github context
+        run: echo "${{ toJSON(github) }}" # metadata can be get by github
