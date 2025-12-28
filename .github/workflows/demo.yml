@@ -1,5 +1,6 @@
 # Upload artifacts: https://github.com/actions/upload-artifact
 # Download artifacts: https://github.com/actions/download-artifact
+# Cache: https://github.com/actions/cache
 
 name: Deploy website
 on:
@@ -12,6 +13,12 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
+        # Caching reusable files so reduces the workflow execution time on dealing with same. For specific scenario related check the official page
+      - name: Cache dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }} # Get all the information of the file and make into a hash so which eventually used to somewhere we require
       - name: Install dependencies
         run: npm ci
       - name: Lint code
