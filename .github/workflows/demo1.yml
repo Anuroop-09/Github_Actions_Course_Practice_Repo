@@ -1,5 +1,9 @@
 name: Events Demo 1
-on: ...
+on:
+  pull_request:
+    types: # opened # accepts multiple values too. Ex: Array or list type declaration
+      - opened
+  workflow_dispatch: # even though there are no arguments we should still declare in this way
 jobs:
   deploy:
     runs-on: ubuntu-latest
