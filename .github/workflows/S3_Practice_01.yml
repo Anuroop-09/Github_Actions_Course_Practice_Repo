@@ -4,7 +4,7 @@ jobs:
   lint-job:
     runs-on: ubuntu-latest
     steps:
-      - name:
+      - name: Get Code
         uses: actions/checkout@v6
       - name: Install NodeJS
         uses: actions/setup-node@v3
@@ -19,7 +19,7 @@ jobs:
   test-job:
     runs-on: ubuntu-latest
     steps:
-      - name:
+      - name: Get Code
         uses: actions/checkout@v6
       - name: Install NodeJS
         uses: actions/setup-node@v3
@@ -32,7 +32,7 @@ jobs:
   deploy-job:
     runs-on: ubuntu-latest
     steps:
-      - name:
+      - name: Get Code
         uses: actions/checkout@v6
       - name: Install NodeJS
         uses: actions/setup-node@v3
