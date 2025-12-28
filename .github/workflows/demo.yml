@@ -21,6 +21,10 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    # Accessing the outputs to use in other jobs or accessible to other jobs
+    outputs: # Overall output from the job
+      script-file: ${{ steps.publish.outputs.script-file }} # user choice for naming
+      # After outputs.<name> the name should be match in both the places. Here and at the step
     steps:
       - name: Get code
         uses: actions/checkout@v6
@@ -28,6 +32,10 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build
+      - name: Publish js file name
+        id: publish # giving id to access uniquely for the steps and accessing output values from the id
+        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';' # Find the javascript file
+        # 'script-file={}' >> #GITHUB_OUTPUT is a step output not the overall output
       - name: Upload artifacts
         uses: actions/upload-artifact@v6
         with:
@@ -46,5 +54,7 @@ jobs:
           name: dist-name # Same name for upload artifacts should be used here. And multiple artifacts can't downloaded or used at once
       - name: Output contents
         run: ls
+      - name: Output file name
+        run: echo "${{ needs.build.outputs.script-file }}" # using needs we can get the output of particular data from other jobs
       - name: Deploy
         run: echo "Deploying..."
