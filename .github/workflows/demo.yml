@@ -1,4 +1,5 @@
 # Upload artifacts: https://github.com/actions/upload-artifact
+# Download artifacts: https://github.com/actions/download-artifact
 
 name: Deploy website
 on:
@@ -39,5 +40,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v7 # Downloads the artifacts uploaded by the previous version
+        with:
+          name: dist-name # Same name for upload artifacts should be used here. And multiple artifacts can't downloaded or used at once
+      - name: Output contents
+        run: ls
       - name: Deploy
         run: echo "Deploying..."
