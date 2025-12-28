@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import MainContent from './MainContent';
 
 
-// Added comments to skkip the workflow run: [skip ci] /[skip actions]
+// Added comments to skip the workflow run: [skip ci] /[skip actions]
 
 describe('MainContent', () => {
   it('should render a button', () => {
