@@ -1,0 +1,42 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - main
+      - dev
+# Environment variables can declared in global, job & step level
+env:
+  MONGODB_DB_NAME: gha-demo
+jobs:
+  test:
+    env:
+      MONGODB_CLUSTER_ADDRESS: cluster0.15pwqcc.mongodb.net
+      MONGODB_USERNAME: maximilian
+      MONGODB_PASSWORD: X34Mtpg10D8RGTi
+      PORT: 8080
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v6
+      - name: Cache dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Run server
+        run: npm start & npx wait-on http://127.0.0.1:$PORT # Interpolate the env variables
+      - name: Run tests
+        run: npm test
+      - name: Output information
+        run: echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        # Job level env variables can't be accessible
+        run: |        
+          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+          echo "MONGODB_DB_NAME: ${{ env.MONGODB_DB_NAME }}"
