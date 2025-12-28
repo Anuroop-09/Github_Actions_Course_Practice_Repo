@@ -1,4 +1,4 @@
-name: "Section 03 Practice Project Workflow 01"
+name: "Section 03 Practice Project Workflow 01 Series"
 on: workflow_dispatch
 jobs:
   lint-job:
