@@ -33,8 +33,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test code
+        id: run-tests
         run: npm run test
       - name: Upload test report
+        if: steps.run-tests.outcome == 'failure' # executes running the step when the previous step is successful. Ex: Created error in 'MainContent.test.jsk' file
         uses: actions/upload-artifact@v6
         with:
           name: test-report
