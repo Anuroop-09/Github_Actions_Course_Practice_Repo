@@ -36,7 +36,8 @@ jobs:
         id: run-tests
         run: npm run test
       - name: Upload test report
-        if: steps.run-tests.outcome == 'failure' # executes running the step when the previous step is successful. Ex: Created error in 'MainContent.test.jsk' file
+        if: failure() && steps.run-tests.outcome == 'failure' # executes running the step when the previous step is successful. Ex: Created error in 'MainContent.test.jsk' file
+        # Github has default behavior to skip all the following jobs or steps to not execute when they are failed. To avoid this behavior we can use some methods in combine. Ex: failure(), success(), always() & cancelled()
         uses: actions/upload-artifact@v6
         with:
           name: test-report
