@@ -76,6 +76,14 @@ jobs:
     # If we run without mentioning the below part it will fail. Because the child yml don't know files that parent should send
     with:
       artifact-name: dist-files
+    # secrets:
+    #   some-secret: ${{ secrets.some-secret }}
+  print-deploy-result:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print deploy output
+        run: echo "${{ needs.deploy.outputs.result }}"
   report:
     needs: [lint, deploy] # It needs the execution result of both jobs to run
     if: failure() # If can be used in job level as well. Ex: Here if any other jobs are failed then only this job will run
