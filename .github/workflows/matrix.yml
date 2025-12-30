@@ -1,0 +1,21 @@
+name: Matrix Deployment
+on: push
+jobs:
+  build:
+    # running tests in multiple values or specifications
+    startegy:
+      matrix:
+        node-version: [18, 20, 22]
+        operating-system: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.operating-system }} # runs on all the listed versions / values. The versions will run in parallel
+    steps:
+      - name: Get code
+        uses: actions/checkout@v6
+      - name: Install NodeJS
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build project
+        run: npm run build
