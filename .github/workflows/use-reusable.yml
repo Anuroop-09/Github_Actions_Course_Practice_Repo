@@ -73,6 +73,9 @@ jobs:
   deploy:
     needs: build
     uses: ./.github/workflows/reusable.yml
+    # If we run without mentioning the below part it will fail. Because the child yml don't know files that parent should send
+    with:
+      artifact-name: dist-files
   report:
     needs: [lint, deploy] # It needs the execution result of both jobs to run
     if: failure() # If can be used in job level as well. Ex: Here if any other jobs are failed then only this job will run
