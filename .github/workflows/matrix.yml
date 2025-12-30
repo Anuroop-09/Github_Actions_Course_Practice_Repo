@@ -8,6 +8,12 @@ jobs:
       matrix:
         node-version: [18, 20, 22]
         operating-system: [ubuntu-latest, windows-latest]
+        include: # stand alone combinations only
+          - node-version: 18
+          - operating-system: ubuntu-latest
+        exclude: # exlcude the combinations
+          - node-version: 12
+            operating-system: ubuntu-latest
     runs-on: ${{ matrix.operating-system }} # runs on all the listed versions / values. The versions will run in parallel
     steps:
       - name: Get code
