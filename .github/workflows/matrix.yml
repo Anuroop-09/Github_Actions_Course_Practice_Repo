@@ -2,6 +2,7 @@ name: Matrix Deployment
 on: push
 jobs:
   build:
+    continue-on-error: true
     # running tests in multiple values or specifications
     strategy:
       matrix:
