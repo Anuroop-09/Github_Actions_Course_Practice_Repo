@@ -3,7 +3,7 @@ on: push
 jobs:
   build:
     # running tests in multiple values or specifications
-    startegy:
+    strategy:
       matrix:
         node-version: [18, 20, 22]
         operating-system: [ubuntu-latest, windows-latest]
