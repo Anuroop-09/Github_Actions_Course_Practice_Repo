@@ -1,3 +1,0 @@
-Create MongoDB Cluster Atlas account
-Create secrets in github repo in Environment section
-Upload files to repo and verify the workflow
