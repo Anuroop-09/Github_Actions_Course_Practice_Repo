@@ -1,0 +1,6 @@
+name: 'Deploy to AWS s3'
+description: 'Deploy a static website via AWS s3'
+runs:
+  using: 'node24'
+  main: 'main.js'
+  
