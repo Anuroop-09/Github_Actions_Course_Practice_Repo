@@ -11,6 +11,9 @@ inputs:
   dist-folders:
     description: 'The folder containing the deployable files'
     required: true
+outputs:
+  website-url:
+    description: 'The URL of the deployed website'
 runs:
   using: 'node24'
   main: 'main.js'
