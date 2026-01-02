@@ -1,0 +1,48 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - main
+      - dev
+# Environment variables can declared in global, job & step level
+env:
+  MONGODB_DB_NAME: gha-demo
+jobs:
+  environment: testing # Based on environment you can access those environment related secrets only
+  test:
+    env:
+     # Sensitive information details should not be exposed even if they are test
+      MONGODB_CLUSTER_ADDRESS: cluster0.15pwqcc.mongodb.net
+      # MONGODB_USERNAME: maximilian
+      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+      # MONGODB_PASSWORD: X34Mtpg10D8RGTi
+      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      # Once serects are declared add accessing them via github features these can't even shown or print in the logs on any where. They still keep them as secret
+      PORT: 8080
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v6
+      - name: Cache dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: npm-deps-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Run server
+        run: npm start & npx wait-on http://127.0.0.1:$PORT # Interpolate the env variables
+      - name: Run tests
+        run: npm test
+      - name: Output information
+        run: |
+          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        # Job level env variables can't be accessible
+        run: |        
+          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+          echo "MONGODB_DB_NAME: ${{ env.MONGODB_DB_NAME }}"
